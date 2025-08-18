@@ -1,0 +1,45 @@
+class Course:
+    def __init__(self, code, name, instructor):
+        self.code = code
+        self.name = name
+        self.instructor = instructor
+
+    def __str__(self):
+        return f"{self.code}: {self.name} (Instructor: {self.instructor})"
+
+
+class CourseCatalog:
+    def __init__(self):
+        self.courses = []
+
+    def add_course(self, course):
+        """Add a new course to the catalog"""
+        self.courses.append(course)
+
+    def search_by_name(self, keyword):
+        """Search for courses by name (case-insensitive)"""
+        keyword = keyword.lower()
+        return [course for course in self.courses if keyword in course.name.lower()]
+
+    def display_all(self):
+        """Display all available courses"""
+        for course in self.courses:
+            print(course)
+
+
+# Example usage
+if __name__ == "__main__":
+    catalog = CourseCatalog()
+
+    # Adding courses
+    catalog.add_course(Course("CS101", "Introduction to Computer Science", "Dr. Smith"))
+    catalog.add_course(Course("MATH201", "Linear Algebra", "Prof. Johnson"))
+    catalog.add_course(Course("CS202", "Data Structures", "Dr. Brown"))
+
+    print("All Courses:")
+    catalog.display_all()
+
+    print("\nSearch Results for 'Data':")
+    results = catalog.search_by_name("Data")
+    for course in results:
+        print(course)
