@@ -1,45 +1,73 @@
-class Course:
-    def __init__(self, code, name, instructor):
-        self.code = code
-        self.name = name
-        self.instructor = instructor
+public class CourseCatalogApp {
 
-    def __str__(self):
-        return f"{self.code}: {self.name} (Instructor: {self.instructor})"
+    // Course class
+    static class Course {
+        private String code;
+        private String name;
+        private String instructor;
 
+        public Course(String code, String name, String instructor) {
+            this.code = code;
+            this.name = name;
+            this.instructor = instructor;
+        }
 
-class CourseCatalog:
-    def __init__(self):
-        self.courses = []
+        public String getName() {
+            return name;
+        }
 
-    def add_course(self, course):
-        """Add a new course to the catalog"""
-        self.courses.append(course)
+        @Override
+        public String toString() {
+            return code + ": " + name + " (Instructor: " + instructor + ")";
+        }
+    }
 
-    def search_by_name(self, keyword):
-        """Search for courses by name (case-insensitive)"""
-        keyword = keyword.lower()
-        return [course for course in self.courses if keyword in course.name.lower()]
+    // CourseCatalog class
+    static class CourseCatalog {
+        private java.util.List<Course> courses;
 
-    def display_all(self):
-        """Display all available courses"""
-        for course in self.courses:
-            print(course)
+        public CourseCatalog() {
+            courses = new java.util.ArrayList<>();
+        }
 
+        public void addCourse(Course course) {
+            courses.add(course);
+        }
 
-# Example usage
-if __name__ == "__main__":
-    catalog = CourseCatalog()
+        public java.util.List<Course> searchByName(String keyword) {
+            java.util.List<Course> results = new java.util.ArrayList<>();
+            keyword = keyword.toLowerCase();
 
-    # Adding courses
-    catalog.add_course(Course("CS101", "Introduction to Computer Science", "Dr. Smith"))
-    catalog.add_course(Course("MATH201", "Linear Algebra", "Prof. Johnson"))
-    catalog.add_course(Course("CS202", "Data Structures", "Dr. Brown"))
+            for (Course course : courses) {
+                if (course.getName().toLowerCase().contains(keyword)) {
+                    results.add(course);
+                }
+            }
+            return results;
+        }
 
-    print("All Courses:")
-    catalog.display_all()
+        public void displayAll() {
+            for (Course course : courses) {
+                System.out.println(course);
+            }
+        }
+    }
 
-    print("\nSearch Results for 'Data':")
-    results = catalog.search_by_name("Data")
-    for course in results:
-        print(course)
+    // Main method
+    public static void main(String[] args) {
+        CourseCatalog catalog = new CourseCatalog();
+
+        // Adding courses
+        catalog.addCourse(new Course("CS101", "Introduction to Computer Science", "Dr. Smith"));
+        catalog.addCourse(new Course("MATH201", "Linear Algebra", "Prof. Johnson"));
+        catalog.addCourse(new Course("CS202", "Data Structures", "Dr. Brown"));
+
+        System.out.println("All Courses:");
+        catalog.displayAll();
+
+        System.out.println("\nSearch Results for 'Data':");
+        for (Course course : catalog.searchByName("Data")) {
+            System.out.println(course);
+        }
+    }
+}
